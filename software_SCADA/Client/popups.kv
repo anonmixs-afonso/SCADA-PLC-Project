@@ -1,0 +1,312 @@
+#:kivy 1.11.1
+<ModbusPopup>:
+    title: "Configurações MODBUS"
+    BoxLayout:
+        id: conf_mod
+        orientation: 'vertical'
+        GridLayout:
+            cols:2
+            rows:2
+            Label:
+                text: "IP"
+                font_size: 14
+            TextInput:
+                id: txt_ip
+                text: "127.0.0.1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Porta"
+                font_size: 14
+            TextInput:
+                id: txt_port
+                text: "502"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.1)
+            Button:
+                text:"Conectar"
+                on_release:
+                    #root.clearInfo()
+                    app.root.startDataRead(txt_ip.text,int(txt_port.text))
+            Button:
+                text:"Fechar"
+                on_release:
+                    root.dismiss()
+                    #root.clearInfo()
+
+<MotorPopup>:
+    title: "Configurações do Motor"
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 5
+            Label:
+                text: "Tipo de Partida"
+                font_size: 14
+            TextInput:
+                id: inv
+                text: "2"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Velocidade"
+                font_size: 14
+            TextInput:
+                id: vel
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Rampa Aceleração"
+                font_size: 14
+            TextInput:
+                id: rampaace
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Rampa Desaceleração"
+                font_size: 14
+            TextInput:
+                id: rampades
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Partida"
+                font_size: 14
+            TextInput:
+                id: partida
+                text: "1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.1)
+            Button:
+                text: 'Configurar'
+                on_release:app.root.AcionaMotor(inv.text,vel.text,rampaace.text,rampades.text,partida.text),root.dismiss()
+            Button:
+                text: 'Fechar'
+                on_release:
+                    root.dismiss()
+
+
+<ScanPopup>:
+    title: "Configurações ScanTime"
+    BoxLayout:
+        id: conf_scan
+        orientation: 'vertical'
+        GridLayout:
+            cols:2
+            rows:1
+            Label:
+                text: "ScanTime [ms]"
+                font_size: 14
+            TextInput:
+                id: txt_st
+                text: "0"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: (1,0.1)
+            Button:
+                text:"Configurar"
+                on_release:
+                    app.root._scan_time = int(txt_st.text)
+                    print(app.root._scan_time), root.dismiss()
+            Button:
+                text:"Fechar"
+                on_release:
+                    root.dismiss()
+
+<MotorConfigPopup>:
+    title: "Configurações do Motor"
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            rows: 5
+            Label:
+                text: "Tipo de Partida"
+                font_size: 14
+            TextInput:
+                id: txt_inv
+                text: "2"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Velocidade"
+                font_size: 14
+            TextInput:
+                id: txt_vel
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Rampa Aceleração"
+                font_size: 14
+            TextInput:
+                id: txt_rampaace
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Rampa Desaceleração"
+                font_size: 14
+            TextInput:
+                id: txt_rampades
+                text: "100"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Partida"
+                font_size: 14
+            TextInput:
+                id: txt_partida
+                text: "1"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.1)
+            Button:
+                text: 'Configurar'
+                on_release:app.root.configMotor(txt_inv.text,txt_vel.text,txt_rampaace.text,txt_rampades.text,txt_partida.text)
+            Button:
+                text: 'Fechar'
+                on_release:
+                    root.dismiss()
+
+<GrafPopup>:
+    title: "Busca Dados Históricos"
+    BoxLayout:
+        orientation: 'vertical'
+        pos_hint: {'x': 0.65, 'y': 0.3}
+        size_hint: 0.2, 0.5
+        GridLayout:
+            cols: 2
+            rows: 3
+            Label:
+                text: "Variável:"
+                font_size: 14
+                halign: 'right'
+                valign: 'middle'
+            TextInput:
+                id: var
+                text: "temperaturasa"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Data inicial:"
+                font_size: 14
+                halign: 'right'
+                valign: 'middle'
+            TextInput:
+                id: init
+                text: "19/03/2025 09:20:00"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Data final:"
+                font_size: 14
+                halign: 'right'
+                valign: 'middle'
+            TextInput:
+                id: final
+                text: "19/03/2025 09:51:50"
+                font_size: 14
+                halign: 'center'
+                valign: 'middle'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.1)
+            Button:
+                text: "Buscar"
+                on_release:
+                    root.showHistGraph(init.text, final.text, var.text)
+            Button:
+                text: "Fechar"
+                on_release:
+                    root.dismiss()
+
+<HistGraphPopup>:
+    title: "Histórico de dados"
+    BoxLayout:
+        orientation: 'vertical'
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Variável (mudar)'
+            background_color: 0.5,0.5,0.5,0.5
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 100
+            y_grid_label: True
+            x_grid_label: True
+            padding:5
+            x_grid: True
+            y_grid: True
+            ymin: 0 
+            xmin: 0 
+            ymax: 500
+        BoxLayout:
+            id: sensores
+            orientation: 'horizontal'
+            size_hint: (1,0.1)
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,0.1)
+            Label:
+                text: 'Timestamp inicial \r\n [size=12] (DD/MM/AAA HH: MM: SS)'
+                halign: 'center'
+                markup: True
+            TextInput:
+                id: txt_init_time
+                size_hint: (1,0.8)
+                halign: 'center'
+                valign: 'middle'
+                multiline:  False
+            Label:
+                text: 'Timestamp final \r\n [size=12] (DD/MM/AAA HH: MM: SS)[/size]'
+                halign: 'center'
+                markup: True
+            TextInput:
+                id: txt_final_time
+                size_hint: (1,0.8)
+                halign: 'center'
+                valign: 'middle'
+                multiline:  False
+            Button:
+                text: "Fechar"
+                size_hint: (1,0.8)
+                on_release: root.dismiss()
+
+<LabeledCheckBoxHistGraph>:
+    orientation: 'horizontal'
+    size_hint: (0.05,1)
+    CheckBox:
+        id: checkbox
+        on_active: None
+    Label:
+        id: label

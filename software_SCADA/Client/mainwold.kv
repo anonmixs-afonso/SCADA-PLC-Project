@@ -1,0 +1,278 @@
+#:kivy 1.11.1
+<MyWidget>:
+    orientation: 'vertical'
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint: (1,0.1)
+        canvas.before:
+            Color:
+                rgb: 0.5, 0.5, 0.5  # Cor cinza
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: 'Supervisório Sistema Refrigeração'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Configurações'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'MODBUS'
+                    on_release: root._modbusPopup.open()
+                Button:
+                    text: 'Scan Time'
+                    on_release: root._scanPopup.open()
+        Image:
+            size_hint: 0.30,1
+            id: img_con
+            source: 'imgs/desconectado.png'
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: 0.5, 0.5, 0.5
+            Rectangle:
+                size: self.size
+        Label:
+            id: lb_temp
+            size_hint: (None,None)
+            size: (termometro.size[0]*0.25,termometro.size[1])
+            pos_hint: {'x': 0.3, 'y': 0.3}
+            canvas:
+                Color:
+                    rgb: 1,0,0
+                Rectangle:
+                    size: self.size
+                    pos: (self.pos[0]+self.width*1.5,self.pos[1])
+        Image:
+            id: termometro
+            source: 'imgs/termometro.png'
+            size_hint: 0.2,0.2
+            pos_hint: lb_temp.pos_hint
+        VarLabel:
+            id:temperaturasa
+            pos_hint:{'top': 0.90,'right':1.3}
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: 0.2,0.2
+            pos_hint: {'x': 0.05, 'y': 0}
+            Button:
+                id:bt_scroll
+                text:'Scroll'
+                color: 0.2, 0.2, 0.2, 1
+                background_normal: ''
+                background_color: 0.5,0.5,0.5,1
+                on_release: root.toggle_button(self)
+            Button:
+                id:bt_hermetico
+                text:'Hermetico'
+                color: 0.2, 0.2, 0.2, 1
+                background_normal: ''
+                background_color: 0.5,0.5,0.5,1
+                on_release: root.toggle_button(self)
+        GridLayout:
+            cols: 1  # 2 colunas
+            rows: 2  # 2 linhas
+            spacing: 10  # Espaçamento entre os itens (opcional)
+            pos_hint: {'x': 0.05, 'y': 0.5}
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.05, 0.15
+                GridLayout:
+                    cols:1
+                    rows:3
+                    Label:
+                        text: 'XV-01'
+                        font_size: 14
+                        size_hint_y: 0.1
+                    Image:
+                        source: 'imgs/valvd.png'
+                        size_hint: 0.75,0.75
+                    Button:
+                        id: ligv1
+                        text: 'DESLIGADO'
+                        valign: 'middle'
+                        size_hint: 1, 0.5
+                        on_release: root.toggle_button(self)
+            BoxLayout:
+                orientation: 'vertical'
+                pos_hint: {'x': 0.1, 'y': 0.25}
+                size_hint: 0.05, 0.15
+                GridLayout:
+                    cols:1
+                    rows:3
+                    Label:
+                        text: 'XV-02'
+                        font_size: 14
+                        size_hint_y: 0.1
+                    Image:
+                        source: 'imgs/valvd.png'
+                        size_hint: 0.75,0.75
+                    Button:
+                        id: ligv2
+                        text: 'DESLIGADO'
+                        valign: 'middle'
+                        size_hint: 1, 0.5
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.18, 'y': 0.39}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-03'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv3
+                    text: 'DESLIGADO'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.27, 'y': 0.27}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-04'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv4
+                    text: 'DESLIGADO'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.1, 'y': 0.85}
+            size_hint: 0.05, 0.10
+            GridLayout:
+                cols:1
+                rows:2
+                Label:
+                    text: 'PIT-03'
+                    font_size: 20
+                VarLabel:
+                    id:pressaopit03
+        Label:
+            text: 'FV-01'
+            pos_hint: {'x':0.7,'y:':0.7}
+        TextInput:
+            id: ent_fv01
+            text: "10%"
+            font_size: 14
+            halign: 'center'
+            valign: 'middle'
+            pos_hint:{'top': 0.8,'right':0.6}
+            size_hint: 0.06,0.06
+        Button:
+            id:bt_graf
+            text:"Gráficos em tempo real"
+            pos_hint:{'top': 0.9,'right':1}
+            size_hint: 0.2,0.1
+            on_release: root._grafPopup.open()
+        Button:
+            id:bt_testea
+            text:"Dados Históricos"
+            pos_hint:{'top': 0.80,'right':1}
+            size_hint: 0.2,0.1
+            on_release: root._hgraph.open()
+        VarLabel:
+            id:tipomotor
+            pos_hint:{'top': 0.9,'right':1.2}
+        VarLabel:
+            id:statuspid
+            pos_hint:{'top': 0.85,'right':1.2}
+        VarLabel:
+            id: vazaosa
+            pos_hint: {'top': 0.9, 'right': 1.2}
+        VarLabel:
+            id: tensaors
+            pos_hint: {'top': 0.85, 'right': 1.2}
+        VarLabel:
+            id: tensaost
+            pos_hint: {'top': 0.8, 'right': 1}
+        VarLabel:
+            id: tensaotr
+            pos_hint: {'top': 0.75, 'right': 1}
+        VarLabel:
+            id: tipopartida
+            pos_hint: {'top': 0.7, 'right': 1}
+        VarLabel:
+            id: partidainversor
+            pos_hint: {'top': 0.65, 'right': 1}
+        VarLabel:
+            id: velocidadeinversor
+            pos_hint: {'top': 0.6, 'right': 0.9}
+        VarLabel:
+            id: rampaaceleracaoinversor
+            pos_hint: {'top': 0.55, 'right': 0.9}
+        VarLabel:
+            id: rampadesaceleracaoinversor
+            pos_hint: {'top': 0.5, 'right': 0.9}
+        VarLabel:
+            id: partidasoft
+            pos_hint: {'top': 0.45, 'right': 0.9}
+        VarLabel:
+            id: rampaaceleracaosoft
+            pos_hint: {'top': 0.4, 'right': 0.9}
+        VarLabel:
+            id: rampadesaceleracaosoft
+            pos_hint: {'top': 0.35, 'right': 0.9}
+        VarLabel:
+            id: partidadireta
+            pos_hint: {'top': 0.3, 'right': 0.9}
+        VarLabel:
+            id: tipopid
+            pos_hint: {'top': 0.25, 'right': 0.9}
+        VarLabel:
+            id: status1230
+            pos_hint: {'top': 0.2, 'right': 0.9}
+        VarLabel:
+            id: status1231
+            pos_hint: {'top': 0.15, 'right': 0.9}
+        VarLabel:
+            id: temperaturatit02
+            pos_hint: {'top': 0.1, 'right': 0.9}
+        VarLabel:
+            id: temperaturatit01
+            pos_hint: {'top': 0.05, 'right': 0.9}
+        VarLabel:
+            id: pressaopit02
+            pos_hint: {'top': 0.9, 'right': 0.8}
+        VarLabel:
+            id: pressaopit01
+            pos_hint: {'top': 0.85, 'right': 0.8}
+        VarLabel:
+            id: controle1328
+            pos_hint: {'top': 0.75, 'right': 0.8}
+        VarLabel:
+            id: controle1329
+            pos_hint: {'top': 0.7, 'right': 0.8}
+        VarLabel:
+            id: statuscompressor
+            pos_hint: {'top': 0.65, 'right': 0.8}
+        VarLabel:
+            id: temperaturatermostato
+            pos_hint: {'top': 0.6, 'right': 0.8}
+        VarLabel:
+            id: vazaopid
+            pos_hint: {'top': 0.55, 'right': 0.8}
+            
+            
+<VarLabel@Label>:
+    text: '-.-'
+    font_size:20
+    bold: True
+    halign: 'center'
+    color: 0,0,0,1

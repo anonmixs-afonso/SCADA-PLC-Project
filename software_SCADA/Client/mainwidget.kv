@@ -1,0 +1,501 @@
+#:kivy 1.11.1
+<MyWidget>:
+    orientation: 'vertical'
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint: (1,0.1)
+        canvas.before:
+            Color:
+                rgb: 0.5, 0.5, 0.5
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: ''
+            font_size: 24
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Configurações'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'MODBUS'
+                    on_release: root._modbusPopup.open()
+                Button:
+                    text: 'Scan Time'
+                    on_release: root._scanPopup.open()
+        Image:
+            size_hint: 0.30,1
+            id: img_con
+            source: 'imgs/desconectado.png'
+    FloatLayout: 
+        canvas:
+            Color:
+                rgb: 0.5, 0.5, 0.5
+            Rectangle:
+                size: self.size
+        Label:
+            id: lb_temp
+            size_hint: (None,None)
+            size: (termometro.size[0]*0.25,termometro.size[1])
+            pos_hint: {'x': 0.2, 'y': 0.3}
+            canvas:
+                Color:
+                    rgb: 1,0,0
+                Rectangle:
+                    size: (self.width * 0.6, self.height)
+                    pos: (self.pos[0]+self.width*1.5,self.pos[1])
+        Termometro:
+            id: termometro
+            pos_hint: lb_temp.pos_hint
+        BoxLayout:
+            orientation:'vertical'
+            size_hint: 0.05,0.05
+            pos_hint: {'x': 0.265, 'y': 0.52}
+            Label:
+                id:ts
+                text: 'Temperatura (ºC):'
+                font_size: 14
+            Label:
+                id: temperaturasa
+                text: '0'
+    
+        Label:
+            id: lb_temp1
+            size_hint: (None,None)
+            size: (termometro1.size[0]*0.25,termometro1.size[1])
+            pos_hint: {'x': 0.3, 'y': 0.3}
+            canvas:
+                Color:
+                    rgb: 1,0,0
+                Rectangle:
+                    size: (self.width * 0.6, self.height)
+                    pos: (self.pos[0]+self.width*1.5,self.pos[1])
+        Termometro:
+            id: termometro1
+            pos_hint: lb_temp1.pos_hint
+        BoxLayout:
+            orientation:'vertical'
+            size_hint: 0.05,0.05
+            pos_hint: {'x': 0.38, 'y': 0.52}
+            Label:
+                text: 'TIT01 (ºC):'
+                font_size: 14
+            Label:
+                id:temperaturatit01
+                text: 'TIT01 (ºC):'
+                font_size: 14
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint: 0.2,0.2
+            pos_hint: {'x': 0.05, 'y': 0}
+            BoxLayout:
+                orientation:'vertical'
+                Label:
+                    text:'SCROLL'
+                    size_hint: 1, 0.12
+                Button:
+                    id:bt_scroll
+                    color: 0.3, 0.3, 0.3, 1
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.AcionaScroll()
+            BoxLayout:
+                orientation:'vertical'
+                Label:
+                    text:'HERMÉTICO'
+                    size_hint: 1, 0.12
+                Button:
+                    id:bt_hermetico
+                    color: 0.3, 0.3, 0.3
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.AcionaHermetico()
+        BoxLayout:
+            pos_hint: {'x': 0.05, 'y': 0.7}
+            size_hint: 0.2, 0.2
+            orientation:'horizontal'
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'M01'
+                    font_size: 14
+                    size_hint: (1,0.05)
+                Image:
+                    source: 'imgs/motor.png'
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'M02'
+                    font_size: 14
+                    size_hint: (1,0.1)
+                Image:
+                    source: 'imgs/motor.png'
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.05, 'y': 0.5}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-01'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv1
+                    text: 'L/D'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+                    color: 0.2, 0.2, 0.2, 1
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.toggle_button(self)
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.05, 'y': 0.25}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-02'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv2
+                    text: 'L/D'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+                    color: 0.2, 0.2, 0.2, 1
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.toggle_button(self)
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.15, 'y': 0.5}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-03'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv3
+                    text: 'L/D'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+                    color: 0.2, 0.2, 0.2, 1
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.toggle_button(self)
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.15, 'y': 0.25}
+            size_hint: 0.05, 0.15
+            GridLayout:
+                cols:1
+                rows:3
+                Label:
+                    text: 'XV-04'
+                    font_size: 14
+                    size_hint_y: 0.1
+                Image:
+                    source: 'imgs/valvd.png'
+                    size_hint: 0.75,0.75
+                Button:
+                    id: ligv4
+                    text: 'L/D'
+                    valign: 'middle'
+                    size_hint: 1, 0.5
+                    color: 0.2, 0.2, 0.2, 1
+                    background_normal: ''
+                    background_color: 0.3,0.3,0.3,1
+                    on_release: root.toggle_button(self)
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'x': 0.5, 'y': 0.45}
+            size_hint: 0.15, 0.1
+            BoxLayout:
+                orientation:'vertical'
+                Label:
+                    text: 'PIT-03'
+                    font_size: 20
+                VarLabel:
+                    id: pressaopit03
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'PIT-02'
+                    font_size: 20
+                VarLabel:
+                    id: pressaopit02
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'x': 0.5, 'y': 0.45}
+            size_hint: 0.15, 0.1
+            BoxLayout:
+                orientation:'vertical'
+                Label:
+                    text: 'PIT-03'
+                    font_size: 20
+                VarLabel:
+                    id: pressaopit03
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'PIT-02'
+                    font_size: 20
+                VarLabel:
+                    id: pressaopit02
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.3, 'y': 0.85}
+            size_hint: 0.1, 0.1
+            canvas.before:
+                Color:
+                    rgb: 0.3, 0.3, 0.3 
+                Line:
+                    width: 1.5 
+                    rectangle: (self.x, self.y, self.width, self.height) 
+            Label:
+                text: 'Vazão PID:'
+            VarLabel:
+                id: vazaopid
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.4, 'y': 0.85}
+            size_hint: 0.1, 0.1
+            canvas.before:
+                Color:
+                    rgb: 0.3, 0.3, 0.3 
+                Line:
+                    width: 1.5 
+                    rectangle: (self.x, self.y, self.width, self.height) 
+            Label:
+                text: 'Tensão rs (V)'
+            VarLabel:
+                id: tensaors
+
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.5, 'y': 0.85}
+            size_hint: 0.1, 0.1
+            canvas.before:
+                Color:
+                    rgb: 0.3, 0.3, 0.3 
+                Line:
+                    width: 1.5 
+                    rectangle: (self.x, self.y, self.width, self.height) 
+            Label:
+                text: 'Tensão st (V)'
+            VarLabel:
+                id: tensaost
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.6, 'y': 0.85}
+            size_hint: 0.1, 0.1
+            canvas.before:
+                Color:
+                    rgb: 0.3, 0.3, 0.3 
+                Line:
+                    width: 1.5 
+                    rectangle: (self.x, self.y, self.width, self.height) 
+            Label:
+                text: 'Tensão tr (V)'
+            VarLabel:
+                id: tensaotr
+
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'x': 0.3, 'y': 0.7}
+            size_hint: 0.2, 0.1  # Ajuste o tamanho conforme necessário
+            BoxLayout:
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgb: 0.3, 0.3, 0.3  # Cor do retângulo
+                    Line:
+                        width: 1.5  # Espessura da linha
+                        rectangle: (self.x, self.y, self.width, self.height)  # Retângulo ao redor do BoxLayout
+                Label:
+                    text: "Vazão SA"
+                    font_size: 14
+                VarLabel:
+                    id: vazaosa
+                    text: "0 m^3/h"
+                    font_size: 14
+            BoxLayout:
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgb: 0.3, 0.3, 0.3  # Cor do retângulo
+                    Line:
+                        width: 1.5  # Espessura da linha
+                        rectangle: (self.x, self.y, self.width, self.height)  # Retângulo ao redor do BoxLayout
+                Label:
+                    text: "Velocidade Inversor"
+                    font_size: 14
+                VarLabel:
+                    id: velocidadeinversor
+                    text: "0 m/s"
+                    font_size: 14    
+
+
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 0.2, 0.1
+            pos_hint: {'top': 0.9, 'right': 1}
+            Button:
+                id: bt_graf_open
+                text: "Abrir gráficos"
+                size_hint: 0.5, 1
+                on_release: root.plot_graph()
+            Button:
+                id: bt_graf_close
+                text: "Fechar gráficos"
+                size_hint: 0.5, 1
+                on_release: root.stop_plot()
+        Button:
+            id:bt_dadoshist
+            text:"Dados Históricos"
+            pos_hint:{'top': 0.80,'right':1}
+            size_hint: 0.2,0.1
+            on_release: root._grafPopup.open()
+        Button:
+            id:bt_acionamotor
+            text:"LIGAR MOTOR"
+            pos_hint:{'top': 0.7,'right':1}
+            size_hint: 0.2,0.1
+            on_release: root._motorPopup.open()
+
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'x': 0.8, 'y': 0.08}
+            size_hint: 0.2, 0.51
+            Label:
+                text: 'INFO MOTOR'
+                font_size: 18
+                bold: True
+                size_hint_y: None
+                height: 30
+            GridLayout:
+                cols: 2  
+                rows: 10 
+                Label:
+                    text: "Tipo Motor:"
+                    font_size: 14
+                VarLabel:
+                    id: tipomotor
+                Label:
+                    text: "Status PID:"
+                    font_size: 14
+                VarLabel:
+                    id: statuspid
+                Label:
+                    text: "Tipo Partida:"
+                    font_size: 14
+                VarLabel:
+                    id: tipopartida
+                Label:
+                    text: "Partida Inversor:"
+                    font_size: 14
+                VarLabel:
+                    id: partidainversor
+                Label:
+                    text: "Rampa Aceleração:"
+                    font_size: 14
+                VarLabel:
+                    id: rampaaceleracaoinversor
+                Label:
+                    text: "Rampa Desaceleração:"
+                    font_size: 14
+                VarLabel:
+                    id: rampadesaceleracaoinversor
+                Label:
+                    text: "Partida Soft:"
+                    font_size: 14
+                VarLabel:
+                    id: partidasoft
+                Label:
+                    text: "Rampa Aceleração Soft:"
+                    font_size: 14
+                VarLabel:
+                    id: rampaaceleracaosoft
+                Label:
+                    text: "Rampa Desaceleração Soft:"
+                    font_size: 14
+                VarLabel:
+                    id: rampadesaceleracaosoft
+                Label:
+                    text: "Partida Direta:"
+                    font_size: 14
+                VarLabel:
+                    id: partidadireta
+                Label:
+                    text: "Tipo PID:"
+                    font_size: 14
+                VarLabel:
+                    id: tipopid
+
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'x': 0.3, 'y': 0.05}
+            size_hint: 0.35, 0.1  # Ajuste o tamanho conforme necessário
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: "Temperatura TIT02:"
+                    font_size: 14
+                VarLabel:
+                    id: temperaturatit02
+                    text: "-.-"
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: "Pressão PIT01:"
+                    font_size: 14
+                VarLabel:
+                    id: pressaopit01
+                    text: "-.-"
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: "Temperatura Termostato:"
+                    font_size: 14
+                VarLabel:
+                    id: temperaturatermostato
+                    text: "-.-"
+                     
+<VarLabel@Label>:
+    text: '-.-'
+    font_size:20
+    bold: True
+    halign: 'center'
+    color: 0,0,0,1
+
+<Termometro@Image>:
+    source: 'imgs/termometro.png'
+    size_hint: 0.2,0.2
+
+<CustomRectangle@Widget>:
+    canvas:
+        Color:
+            rgb: 0.5, 0.7, 1
+        Rectangle:
+            size: (self.width * 0.6, self.height)  
+            pos: (self.pos[0] + self.width * 1.5, self.pos[1])  
